@@ -1,0 +1,21 @@
+{
+  "name": "node-xml-lite",
+  "version": "0.0.1",
+  "description": "xml parser - pure javascript",
+  "keywords": [
+    "xml"
+  ],
+  "dependencies": {
+    "iconv-lite": ">=0.2.0"
+  },
+  "homepage": "http://github.com/hgourvest/node-xml-lite",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hgourvest/node-xml-lite"
+  },
+  "author": {
+    "name": "Henri Gourvest",
+    "email": "hgourvest@gmail.com"
+  },
+  "main": "./index.js"
+}
