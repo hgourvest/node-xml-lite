@@ -1,9 +1,11 @@
 {
   "name": "node-xml-lite",
   "version": "0.0.1",
-  "description": "xml parser - pure javascript",
+  "description": "Pure javascript XML ANSI SAX parser for Node.js",
   "keywords": [
-    "xml"
+    "xml",
+    "sax",
+    "ansi"
   ],
   "dependencies": {
     "iconv-lite": ">=0.2.0"
