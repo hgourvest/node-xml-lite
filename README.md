@@ -4,7 +4,7 @@ This is a pure javascript XML ANSI/Unicode SAX parser for Node.js.
 
 ## Install
 
-  npm install node-xml-lite
+    npm install node-xml-lite
 
 ## Simple usage
     
