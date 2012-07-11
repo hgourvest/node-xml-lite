@@ -1,8 +1,8 @@
 # node-xml-lite
 
-This is a pure javascript XML SAX parser for Node.js.
-The specificity of this xml parser is that it can parse a document from a Buffer.
-It relies on iconv-lite to decode the text according to the code page of the document.
+ - This is a pure javascript XML SAX parser for Node.js.
+ - The specificity of this xml parser is that it can parse a document from a Buffer.
+ - It relies on iconv-lite to decode the text according to the code page of the document.
 
 ## Install
 
