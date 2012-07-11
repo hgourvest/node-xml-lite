@@ -1,6 +1,6 @@
 # node-xml-lite
 
-This is a pure javascript XML ANSI/Unicode SAX parser for Node.js.
+This is a pure javascript XML SAX parser for Node.js.
 
 ## Install
 
