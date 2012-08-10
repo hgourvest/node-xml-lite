@@ -65,6 +65,7 @@ const
     CHAR_AMPE   = 38, // &
     CHAR_SINQ   = 39, // '
     CHAR_MINU   = 45, // -
+    CHAR_PT     = 46, // .
     CHAR_SLAH   = 47, // /
     CHAR_ZERO   = 48, // 0
     CHAR_NINE   = 57, // 9
@@ -117,7 +118,7 @@ function isNum(v) {
 }
 
 function isAlphaNum(v) {
-    return (isAlpha(v) || isNum(v))
+    return (isAlpha(v) || isNum(v) || (v == CHAR_PT) || (v == CHAR_MINU))
 }
 
 function isHex(v) {
