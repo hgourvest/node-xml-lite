@@ -171,11 +171,13 @@ StringBuffer.prototype.appendBuffer = function(value) {
     }
 };
 
+/*
 StringBuffer.prototype.trimRight = function() {
     while (this.pos > 0 && isSpace(this.buffer[this.pos-1])) {
         this.pos--;
     }
 };
+*/
 
 StringBuffer.prototype.toString = function(encoding) {
     if (!encoding) {
@@ -443,6 +445,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                                 this.stack.state = xsEscape;
                                 this.stack.savedstate = xsAttributeValue;
                                 break;
+/*
                             case CHAR_CR:
                             case CHAR_LF:
                                 this.value.trimRight();
@@ -450,6 +453,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                                 this.stack.state = xsEatSpaces;
                                 this.stack.savedstate = xsAttributeValue;
                                 break;
+ */
                             default:
                                 this.value.append(c);
                         }
@@ -466,12 +470,13 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
             case xsElementString:
                 switch (c) {
                     case CHAR_LESS:
-                        this.value.trimRight();
+                        //this.value.trimRight();
                         if (!event(xtText, this.value.toString(this.encoding))) {
                             return false;
                         }
                         this.stack.state = xsTryCloseElement;
                         break;
+/*
                     case CHAR_CR:
                     case CHAR_LF:
                         this.value.trimRight();
@@ -479,6 +484,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                         this.stack.state = xsEatSpaces;
                         this.stack.savedstate = xsElementString;
                         break;
+*/
                     case CHAR_AMPE:
                         this.stack.state = xsEscape;
                         this.stack.savedstate = xsElementString;
