@@ -1,6 +1,6 @@
 {
   "name": "node-xml-lite",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Pure javascript XML ANSI/Unicode SAX parser for Node.js",
   "keywords": [
     "xml",
@@ -17,7 +17,7 @@
   },
   "author": {
     "name": "Henri Gourvest",
-    "email": "hgourvest@gmail.com",
+    "email": "hgourvest@progdigy.com",
     "url": "http://github.com/hgourvest"
   },
   "main": "./index.js"

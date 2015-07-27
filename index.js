@@ -171,14 +171,6 @@ StringBuffer.prototype.appendBuffer = function(value) {
     }
 };
 
-/*
-StringBuffer.prototype.trimRight = function() {
-    while (this.pos > 0 && isSpace(this.buffer[this.pos-1])) {
-        this.pos--;
-    }
-};
-*/
-
 StringBuffer.prototype.toString = function(encoding) {
     if (!encoding) {
         return this.buffer.slice(0, this.pos).toString()
@@ -328,8 +320,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                     if (!this.stack.prev) {
                         return true;
                     }
-                    this.stack.state = xsEatSpaces;
-                    this.stack.savedstate = xsEnd;
+                    this.stack.state = xsEnd;
                     break;
                 } else {
                     return false;
@@ -344,13 +335,11 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                         break;
                     case CHAR_EXCL:
                         this.position = 0;
-                        this.stack.savedstate = xsChildNodes;
                         this.stack.state = xsElementComment;
                         this.stack.clazz = xcComment;
                         break;
                     case CHAR_QUES:
-                        this.stack.savedstate = xsChildNodes;
-                        this.stack.state = xsEatSpaces;
+                        this.stack.state = xsChildNodes;
                         this.stackUp();
                         this.str.pos = 0;
                         this.stack.state = xsElementPI;
@@ -393,8 +382,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                         this.stack.state = xsCloseEmptyElement;
                         break;
                     case CHAR_GREA:
-                        this.stack.state = xsEatSpaces;
-                        this.stack.savedstate = xsChildNodes;
+                        this.stack.state = xsChildNodes;
                         break;
                     default:
                         if (isAlpha(c)) {
@@ -445,15 +433,6 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                                 this.stack.state = xsEscape;
                                 this.stack.savedstate = xsAttributeValue;
                                 break;
-/*
-                            case CHAR_CR:
-                            case CHAR_LF:
-                                this.value.trimRight();
-                                this.value.append(CHAR_SP);
-                                this.stack.state = xsEatSpaces;
-                                this.stack.savedstate = xsAttributeValue;
-                                break;
- */
                             default:
                                 this.value.append(c);
                         }
@@ -470,21 +449,11 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
             case xsElementString:
                 switch (c) {
                     case CHAR_LESS:
-                        //this.value.trimRight();
                         if (!event(xtText, this.value.toString(this.encoding))) {
                             return false;
                         }
                         this.stack.state = xsTryCloseElement;
                         break;
-/*
-                    case CHAR_CR:
-                    case CHAR_LF:
-                        this.value.trimRight();
-                        this.value.append(CHAR_SP);
-                        this.stack.state = xsEatSpaces;
-                        this.stack.savedstate = xsElementString;
-                        break;
-*/
                     case CHAR_AMPE:
                         this.stack.state = xsEscape;
                         this.stack.savedstate = xsElementString;
@@ -541,7 +510,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                             return false;
                         }
                         event(xtComment, this.str.toString(this.encoding));
-                        this.stack.state = xsEatSpaces;
+                        this.stack.state = xsChildNodes;
                         break;
                     default:
                         return false;
@@ -550,10 +519,11 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
             case xsDoctype:
                 // todo: parse elements ...
                 if (c == CHAR_GREA) {
-                    this.stack.state = xsEatSpaces;
+                    
                     if (this.stack.prev) {
-                        this.stack.savedstate = xsChildNodes
+                        this.stack.state = xsChildNodes
                     } else {
+                        this.stack.state = xsEatSpaces;
                         this.stack.savedstate = xsStart;
                     }
                 }
@@ -629,8 +599,7 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                                 if (!event(xtCData, this.value.toString(this.encoding))) {
                                     return false;
                                 }
-                                this.stack.state = xsEatSpaces;
-                                this.stack.savedstate = xsChildNodes;
+                                this.stack.state = xsChildNodes;
                                 break;
                             case CHAR_RIBR:
                                 this.value.append(c);
