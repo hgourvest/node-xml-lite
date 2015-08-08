@@ -1,6 +1,6 @@
 {
   "name": "node-xml-lite",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Pure javascript XML ANSI/Unicode SAX parser for Node.js",
   "keywords": [
     "xml",

@@ -510,7 +510,10 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                             return false;
                         }
                         event(xtComment, this.str.toString(this.encoding));
-                        this.stack.state = xsChildNodes;
+                        if (this.stack.savedstate == xsStart)
+                            this.stack.state = xsEatSpaces;
+                        else
+                            this.stack.state = xsChildNodes;
                         break;
                     default:
                         return false;
