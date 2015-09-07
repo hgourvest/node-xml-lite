@@ -22,7 +22,11 @@
     "url": "http://github.com/hgourvest"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "mocha"
   },
-  "main": "./index.js"
+  "main": "./index.js",
+  "devDependencies": {
+    "mocha": "^2.3.1",
+    "request": "^2.61.0"
+  }
 }
