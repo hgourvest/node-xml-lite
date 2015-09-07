@@ -969,5 +969,7 @@ var parseBuffer = exports.parseBuffer = function(buffer) {
 };
 
 exports.parseString = function(str) {
+   var stripBom = require('strip-bom');
+   str = stripBom(str);
    return parseBuffer(new Buffer(str));
 };

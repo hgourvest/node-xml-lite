@@ -8,7 +8,8 @@
     "ansi"
   ],
   "dependencies": {
-    "iconv-lite": ">=0.2.0"
+    "iconv-lite": ">=0.2.0",
+    "strip-bom": "^2.0.0"
   },
   "homepage": "http://github.com/hgourvest/node-xml-lite",
   "repository": {
@@ -20,5 +21,12 @@
     "email": "hgourvest@progdigy.com",
     "url": "http://github.com/hgourvest"
   },
-  "main": "./index.js"
+  "scripts": {
+    "test": "mocha"
+  },
+  "main": "./index.js",
+  "devDependencies": {
+    "mocha": "^2.3.1",
+    "request": "^2.61.0"
+  }
 }
