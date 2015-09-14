@@ -218,6 +218,9 @@ XMLParser.prototype.stackDown = function() {
 };
 
 XMLParser.prototype.parseBuffer = function(buffer, len, event) {
+    buffer = stripBom(buffer);
+    len = buffer.length; 
+
     var i = 0;
     var c = buffer[i];
     while (true) {
@@ -836,9 +839,10 @@ var SAXParseFile = exports.SAXParseFile = function(path, event, callback) {
             function cb(err, br) {
                 if (!err) {
                     if (br > 0) {
-                        var ret = parser.parseBuffer(buffer, br, event);
+                        buffer = stripBom(buffer);
+                        var ret = parser.parseBuffer(buffer, buffer.length, event);
                         if (ret === undefined){
-                            fs.read(fd, buffer, 0, BUFFER_LENGTH, null, cb);
+                            fs.read(fd, buffer, 0, buffer.length, null, cb);
                         } else if (ret === true) {
                             if (callback) {
                                 callback()
@@ -872,9 +876,10 @@ var SAXParseFileSync = exports.SAXParseFileSync = function(path, event) {
         var parser = new XMLParser();
         var br = fs.readSync(fd, buffer, 0, BUFFER_LENGTH);
         while (br > 0) {
-            var ret = parser.parseBuffer(buffer, br, event);
+            buffer = stripBom(buffer);
+            var ret = parser.parseBuffer(buffer, buffer.length, event);
             if (ret === undefined){
-                br = fs.readSync(fd, buffer, 0, BUFFER_LENGTH);
+                br = fs.readSync(fd, buffer, 0, buffer.length);
             } else if (ret === true) {
                 return
             } else if (ret === false) {
@@ -956,20 +961,34 @@ var parseBuffer = exports.parseBuffer = function(buffer) {
         parser = new XMLParser(),
         stack = [];
 
+    buffer = stripBom(buffer);
     var ret = parser.parseBuffer(buffer, buffer.length,
         function(state, p1, p2) {
             node = processEvent(stack, state, p1, p2);
             return true;
         }
     );
+
     if (ret === false) {
         throw new Error("parsing error at line: " + parser.line + ", col: " + parser.col)
     }
     return node;
 };
 
+var stripBom = function(x) {
+    if (typeof x === 'string' && x.charCodeAt(0) === 0xFEFF) {
+        return x.slice(1);
+    }
+
+    if (Buffer.isBuffer(x) && x[0] === 0xEF && x[1] === 0xBB && x[2] === 0xBF) {
+        return x.slice(3);
+    }
+
+    return x;
+};
+
 exports.parseString = function(str) {
-   var stripBom = require('strip-bom');
    str = stripBom(str);
    return parseBuffer(new Buffer(str));
 };
+

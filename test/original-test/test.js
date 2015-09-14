@@ -1,6 +1,6 @@
 var
-    xml = require('../index.js'),
-    filename = __dirname + '/test.xml';
+    xml = require('../../index.js'),
+    filename = __dirname + '/../test.xml';
 
 function logXML(data) {
     console.log(JSON.stringify(data, '   ', '\t'));

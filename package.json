@@ -8,8 +8,7 @@
     "ansi"
   ],
   "dependencies": {
-    "iconv-lite": ">=0.2.0",
-    "strip-bom": "^2.0.0"
+    "iconv-lite": ">=0.2.0"
   },
   "homepage": "http://github.com/hgourvest/node-xml-lite",
   "repository": {
