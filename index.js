@@ -7,6 +7,7 @@ const
     BUFFER_LENGTH = 1024;
 
 const
+    xsBOMUTF8 = -1,
     xsStart = 0,
     xsEatSpaces = 1,
     xsElement = 2,
@@ -191,6 +192,8 @@ StringBuffer.prototype.toBuffer = function() {
 
 function XMLParser() {
     this.stackUp();
+    this.stack.state = xsBOMUTF8;
+    this.stack.position = 0;
     this.str = new StringBuffer();
     this.value = new StringBuffer();
     this.line = 0;
@@ -222,6 +225,22 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
     var c = buffer[i];
     while (true) {
         switch (this.stack.state) {
+            case xsBOMUTF8:
+                switch (this.stack.position) {
+                    case 0: if (c != 0xEF) {
+                                this.stack.state = xsEatSpaces;
+                                continue;
+                            }
+                            break;
+                    case 1: if (c != 0xBB) return false;
+                            break;
+                    case 2: if (c != 0xBF) return false;
+                            this.encoding = "utf-8";
+                            this.stack.state = xsEatSpaces;
+                            break;
+                }
+                this.stack.position++;
+                break;
             case xsEatSpaces:
                 if (!isSpace(c)) {
                     this.stack.state = this.stack.savedstate;
