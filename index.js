@@ -220,7 +220,11 @@ XMLParser.prototype.stackDown = function() {
     }
 };
 
-XMLParser.prototype.parseBuffer = function(buffer, len, event) {
+XMLParser.prototype.parseBuffer = function(buffer, len, external_event) {
+    var self = this;
+    var event = function(state, a, b) {
+       return external_event(state, a, b, self.line, self.col);
+    };
     var i = 0;
     var c = buffer[i];
     while (true) {
