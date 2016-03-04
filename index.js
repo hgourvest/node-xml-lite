@@ -518,6 +518,8 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                 switch (this.position) {
                     case 0:
                         if (c != CHAR_MINU) {
+                            this.str.append(CHAR_MINU);
+                            this.str.append(c);
                             this.position = 2;
                             this.stack.state = xsElementComment;
                         } else {
