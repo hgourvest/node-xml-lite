@@ -28,7 +28,7 @@ const
     xsElementDataPI = 17,
     xsCloseElementPI = 18,
     xsElementCDATA = 19,
-    xsClodeElementCDATA = 20,
+    xsCloseElementCDATA = 20,
     xsEscape = 21,
     xsEscape_lt = 22,
     xsEscape_gt = 23,
@@ -599,13 +599,13 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                     default:
                         if (c == CHAR_RIBR) {
                             this.position = 0;
-                            this.stack.state = xsClodeElementCDATA;
+                            this.stack.state = xsCloseElementCDATA;
                         } else {
                             this.value.append(c);
                         }
                 }
                 break;
-            case xsClodeElementCDATA:
+            case xsCloseElementCDATA:
                 switch (this.position) {
                     case 0:
                         if (c == CHAR_RIBR) {
