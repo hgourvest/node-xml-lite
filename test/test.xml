@@ -4,7 +4,7 @@
     <!-- text-->
     truc
     <!-- comment -->
-    <!-- comment-with-hyphen -->
+    <!-- comment-with--hyphen -->
     foo
     &amp;&lt;&gt;&quot;
     <node:x>foo</node:x>

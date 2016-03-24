@@ -528,13 +528,18 @@ XMLParser.prototype.parseBuffer = function(buffer, len, event) {
                         break;
                     case 1:
                         if (c != CHAR_GREA) {
-                            return false;
+                            this.str.append(CHAR_MINU);
+                            this.str.append(CHAR_MINU);
+                            this.str.append(c);
+                            this.position = 2;
+                            this.stack.state = xsElementComment;
+                        } else {
+                            event(xtComment, this.str.toString(this.encoding));
+                            if (this.stack.savedstate == xsStart)
+                                this.stack.state = xsEatSpaces;
+                            else
+                                this.stack.state = xsChildNodes;
                         }
-                        event(xtComment, this.str.toString(this.encoding));
-                        if (this.stack.savedstate == xsStart)
-                            this.stack.state = xsEatSpaces;
-                        else
-                            this.stack.state = xsChildNodes;
                         break;
                     default:
                         return false;
